@@ -1,0 +1,12 @@
+{
+  "name": "mean-tut01",
+  "version": "1.0.0",
+  "description": "Following along with the MEAN tutorial from: From https://thinkster.io/mean-stack-tutorial",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -a 127.0.0.1 -p 8000"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,5 @@
+# Stupid Mac
+.DS_Store
+
+# NPM
+node_modules/
