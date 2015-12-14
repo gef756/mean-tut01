@@ -7,7 +7,16 @@
 
 var app = angular.module('flapperNews', []);
 
-app.controller('MainCtrl', ['$scope', function($scope) {
+app.factory('posts', [function() {
+  var o = {
+    posts: []
+  };
+  return o;
+}]);
+
+app.controller('MainCtrl', ['$scope', 'posts',
+    function($scope, posts) {
+  $scope.posts = posts.posts;
   $scope.test = 'Hello world!';
 
   $scope.posts = [
