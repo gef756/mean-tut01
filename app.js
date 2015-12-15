@@ -77,6 +77,10 @@ app.controller('PostsCtrl', [
       if ($scope.body === '') {
         return;
       }
+      // Add comments property if it doesn't exist already
+      if (!$scope.post.hasOwnProperty('comments')) {
+        $scope.post.comments = [];
+      }
       // Add comment to post
       $scope.post.comments.push({
         body: $scope.body,
