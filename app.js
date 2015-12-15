@@ -70,8 +70,21 @@ app.controller('MainCtrl', ['$scope', 'posts',
 
 app.controller('PostsCtrl', [
   '$scope', '$stateParams', 'posts', function($scope, $stateParams, posts) {
-    console.log('In PostsCtrl. Searching for id ' + $stateParams.id);
     $scope.post = posts.posts[$stateParams.id];
-    console.log('$scope.post' + posts.posts);
+
+    $scope.addComment = function() {
+      // Don't add if comment is empty
+      if ($scope.body === '') {
+        return;
+      }
+      // Add comment to post
+      $scope.post.comments.push({
+        body: $scope.body,
+        author: 'user',
+        upvotes: 0
+      });
+      // Clear input after submission
+      $scope.body = '';
+    }
   }
 ])
