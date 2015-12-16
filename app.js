@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+require('./models/Posts');
 
 var app = express();
 
