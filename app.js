@@ -6,10 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+// Be sure to register models before routes
 require('./models/Posts');
 require('./models/Comments');
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
+
 
 var app = express();
 
