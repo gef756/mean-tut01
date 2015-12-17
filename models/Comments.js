@@ -13,4 +13,9 @@ var CommentSchema = new mongoose.Schema({
   }
 });
 
+CommentSchema.methods.upvote = function(cb) {
+  this.upvotes++;
+  this.save(cb);
+};
+
 mongoose.model('Comment', CommentSchema);
