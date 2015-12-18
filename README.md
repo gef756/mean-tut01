@@ -5,8 +5,9 @@ https://thinkster.io/mean-stack-tutorial
 
 ... with some modifications.
 
-# Install Instruciton
-1. Run `npm install`.
+## Install Instructions
+1. Run `npm install` to get all the dependencies.
+2. Create database directory `mkdir -p data/db`.
 
 ## Run Instructions
 1. Start up mongodb with `mongod --dbpath data/db`.
