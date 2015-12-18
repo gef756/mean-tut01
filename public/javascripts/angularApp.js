@@ -15,7 +15,12 @@ app.config([
       .state('home', {
         url: '/home',
         templateUrl: '/home.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        resolve: {
+          postPromise: ['posts', function(posts) {
+            return posts.getAll();
+          }]
+        }
       })
       .state('posts', {
         url: '/posts/{id}',
@@ -26,7 +31,7 @@ app.config([
   }
 ]);
 
-app.factory('posts', [function() {
+app.factory('posts', ['$http', function($http) {
   var o = {
     posts: [
       {title: 'post 1', upvotes: 5},
@@ -35,6 +40,11 @@ app.factory('posts', [function() {
       {title: 'post 4', upvotes: 9},
       {title: 'post 5', upvotes: 4}
     ]
+  };
+  o.getAll = function() {
+    return $http.get('/posts').success(function(data) {
+      angular.copy(data, o.posts);
+    });
   };
   return o;
 }]);
