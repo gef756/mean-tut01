@@ -75,6 +75,10 @@ app.factory('posts', ['$http', function($http) {
     });
   };
 
+  o.addComment = function(id, comment) {
+    return $http.post('/posts/' + id + '/comments', comment);
+  };
+
   return o;
 }]);
 
@@ -114,18 +118,17 @@ app.controller('PostsCtrl', [
       if ($scope.body === '') {
         return;
       }
-      // Add comments property if it doesn't exist already
-      if (!$scope.post.hasOwnProperty('comments')) {
-        $scope.post.comments = [];
-      }
-      // Add comment to post
-      $scope.post.comments.push({
-        body: $scope.body,
-        author: 'user',
-        upvotes: 0
-      });
+      // Submit comment to server
+      posts
+        .addComment(post._id, {
+          body: $scope.body,
+          author: 'user'
+        })
+        .success(function(comment) {
+          $scope.post.comments.push(comment);
+        });
       // Clear input after submission
       $scope.body = '';
     }
   }
-])
+]);
