@@ -49,8 +49,10 @@ app.factory('posts', ['$http', function($http) {
   };
 
   o.create = function(post) {
-    return $http.post('/posts', post).success(function(data) {
-      o.posts.push(data);
+    return $http
+      .post('/posts', post)
+      .success(function(data) {
+        o.posts.push(data);
     });
   };
 
@@ -79,8 +81,7 @@ app.controller('MainCtrl', ['$scope', 'posts',
       link: $scope.link,
       upvotes: 0
     };
-    posts.create(newPost); // push to database
-    $scope.posts.push(newPost); // display to user
+    posts.create(newPost);
     // Reset input for next submission
     $scope.title = '';
     $scope.link = '';
