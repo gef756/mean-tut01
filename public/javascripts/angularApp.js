@@ -41,11 +41,19 @@ app.factory('posts', ['$http', function($http) {
       {title: 'post 5', upvotes: 4}
     ]
   };
+
   o.getAll = function() {
     return $http.get('/posts').success(function(data) {
       angular.copy(data, o.posts);
     });
   };
+
+  o.create = function(post) {
+    return $http.post('/posts', post).success(function(data) {
+      o.posts.push(data);
+    });
+  };
+
   return o;
 }]);
 
@@ -58,15 +66,13 @@ app.controller('MainCtrl', ['$scope', 'posts',
     if(!$scope.title || $scope.title === '') {
       return;
     }
-    $scope.posts.push({
+    var newPost = {
       title: $scope.title,
       link: $scope.link,
-      upvotes: 0,
-      comments: [
-        {author: 'Joe', body: 'Cool post!', upvotes: 0},
-        {author: 'Bob', body: 'Great idea but everything is wrong!', upvotes: 0}
-      ]
-    });
+      upvotes: 0
+    };
+    posts.create(newPost); // push to database
+    $scope.posts.push(newPost); // display to user
     // Reset input for next submission
     $scope.title = '';
     $scope.link = '';
