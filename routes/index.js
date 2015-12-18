@@ -26,6 +26,7 @@ router.post('/posts', function(req, res, next) {
     if (err) {
       return next(err);
     }
+    res.json(post); // send confirmed post back to client
   });
 });
 
