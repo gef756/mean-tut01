@@ -228,7 +228,7 @@ app.controller('AuthCtrl', ['$scope', '$state', 'auth',
           $scope.error = error;
         })
         .then(function() {
-          $scope.go('home');
+          $state.go('home');
         });
     };
 
