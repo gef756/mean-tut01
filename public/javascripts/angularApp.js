@@ -31,6 +31,28 @@ app.config([
             return posts.get($stateParams.id);
           }]
         }
+      })
+      .state('login', {
+        url: '/login',
+        templateUrl: '/login.html',
+        controller: 'AuthCtrl',
+        onEnter: ['$state', 'auth', function($state, auth) {
+          // check if user is already logged in, and if so, redirect to home
+          if (auth.isLoggedIn()) {
+            $state.go('home');
+          }
+        }]
+      })
+      .state('register', {
+        url: '/register',
+        templateUrl: '/register.html',
+        controller: 'AuthCtrl',
+        onEnter: ['$state', 'auth', function($state, auth) {
+          // check if user is already logged in, and if so, redirect to home
+          if (auth.isLoggedIn()) {
+            $state.go('home');
+          }
+        }]
       });
     $urlRouterProvider.otherwise('home');
   }
