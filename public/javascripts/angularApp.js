@@ -182,7 +182,8 @@ app.controller('MainCtrl', ['$scope', 'posts', 'auth',
     var newPost = {
       title: $scope.title,
       link: $scope.link,
-      upvotes: 0
+      upvotes: 0,
+      author: 'user'
     };
     posts.create(newPost);
     // Reset input for next submission
