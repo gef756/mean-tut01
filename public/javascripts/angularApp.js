@@ -182,8 +182,7 @@ app.controller('MainCtrl', ['$scope', 'posts', 'auth',
     var newPost = {
       title: $scope.title,
       link: $scope.link,
-      upvotes: 0,
-      author: 'user'
+      upvotes: 0
     };
     posts.create(newPost);
     // Reset input for next submission
@@ -211,8 +210,7 @@ app.controller('PostsCtrl', [
       // Submit comment to server
       posts
         .addComment(post._id, {
-          body: $scope.body,
-          author: 'user'
+          body: $scope.body
         })
         .success(function(comment) {
           $scope.post.comments.push(comment);
