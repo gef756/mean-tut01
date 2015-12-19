@@ -1,12 +1,18 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var jwt = require('express-jwt');
 
 var router = express.Router();
 
 var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
+
+var auth = jwt({
+  secret: 'SECRET',  // should be the same as the one in models/User.js
+  userProperty: 'payload'
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -22,7 +28,7 @@ router.get('/posts', function(req, res, next) {
   });
 });
 
-router.post('/posts', function(req, res, next) {
+router.post('/posts', auth, function(req, res, next) {
   var post = new Post(req.body);
   post.save(function(err, post) {
     if (err) {
@@ -56,7 +62,7 @@ router.get('/posts/:post', function(req, res, next) {
   });
 });
 
-router.put('/posts/:post/upvote', function(req, res, next) {
+router.put('/posts/:post/upvote', auth, function(req, res, next) {
   req.post.upvote(function(err, post) {
     if (err) {
       return next(err);
@@ -65,7 +71,7 @@ router.put('/posts/:post/upvote', function(req, res, next) {
   });
 });
 
-router.post('/posts/:post/comments', function(req, res, next) {
+router.post('/posts/:post/comments', auth, function(req, res, next) {
   var comment = new Comment(req.body);
   comment.post = req.post;
   comment.save(function(err, comment) {
@@ -96,13 +102,14 @@ router.param('comment', function(req, res, next, id) {
   });
 });
 
-router.put('/posts/:post/comments/:comment/upvote', function (req, res, next) {
-  req.comment.upvote(function(err, comment) {
-    if (err) {
-      return next(err);
-    }
-    res.json(comment);
-  });
+router.put('/posts/:post/comments/:comment/upvote', auth,
+  function (req, res, next) {
+    req.comment.upvote(function(err, comment) {
+      if (err) {
+        return next(err);
+      }
+      res.json(comment);
+    });
 });
 
 router.post('/register', function(req, res, next) {
