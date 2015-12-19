@@ -169,9 +169,10 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
   return auth;
 }]);
 
-app.controller('MainCtrl', ['$scope', 'posts',
-    function($scope, posts) {
+app.controller('MainCtrl', ['$scope', 'posts', 'auth',
+    function($scope, posts, auth) {
   $scope.posts = posts.posts;
+  $scope.isLoggedIn = auth.isLoggedIn;
   $scope.test = 'Hello world!';
 
   $scope.addPost = function() {
@@ -196,9 +197,10 @@ app.controller('MainCtrl', ['$scope', 'posts',
 }]);
 
 app.controller('PostsCtrl', [
-  '$scope', 'posts', 'post',
-  function($scope, posts, post) {
+  '$scope', 'posts', 'post', 'auth',
+  function($scope, posts, post, auth) {
     $scope.post = post;
+    $scope.isLoggedIn = auth.isLoggedIn;
 
     $scope.addComment = function() {
       // Don't add if comment is empty
