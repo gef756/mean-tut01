@@ -5,11 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
 
 // Be sure to register models before routes
 require('./models/Posts');
 require('./models/Comments');
+require('./models/Users');
 
+// config
+require('./config/passport');
+
+// Set up routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -30,6 +36,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+
+// Routes
 app.use('/bower_components/',
   express.static(path.join(__dirname, 'bower_components')));
 
