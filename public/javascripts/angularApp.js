@@ -126,6 +126,20 @@ app.factory('posts', ['$http', 'auth', function($http, auth) {
       });
   };
 
+  o.downvoteComment = function(post, comment) {
+    return $http
+      .put('/posts/' + post._id + '/comments/' + comment._id + '/downvote',
+        null, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
+      .success(function(data) {
+        // Update vote count locally
+        // We may want to consider using the newest vote count, but
+        // that would cause some confusion from a UX perspective
+        // as clicking the button could result in a (net) zero impact
+        // or even an impact in the opposite direction.
+        comment.upvotes--;
+      });
+  };
+
   return o;
 }]);
 
@@ -235,6 +249,10 @@ app.controller('PostsCtrl', [
 
     $scope.incrementUpvotes = function(comment) {
       posts.upvoteComment(post, comment);
+    };
+
+    $scope.decrementUpvotes = function(comment) {
+      posts.downvoteComment(post, comment);
     };
   }
 ]);

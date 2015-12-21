@@ -123,6 +123,16 @@ router.put('/posts/:post/comments/:comment/upvote', auth,
     });
 });
 
+router.put('/posts/:post/comments/:comment/downvote', auth,
+  function (req, res, next) {
+    req.comment.downvote(function(err, comment) {
+      if (err) {
+        return next(err);
+      }
+      res.json(comment);
+    });
+});
+
 router.post('/register', function(req, res, next) {
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({message: 'Please fill out all fields'});
