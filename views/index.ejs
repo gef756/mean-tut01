@@ -32,6 +32,8 @@
       <span class="glyphicon glyphicon-thumbs-up"
         ng-click="incrementUpvotes(post)"></span>
       {{post.upvotes}}
+      <span class="glyphicon glyphicon-thumbs-down"
+        ng-click="decrementUpvotes(post)"></span>
       <span style="font-size: 20px; margin-left: 10px;">
         <a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
         <span ng-hide="post.link">{{post.title}}</span>
